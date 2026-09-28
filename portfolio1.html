@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Zeeshan - Full Stack Developer</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0f3460 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #06b6d4;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            margin-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -60%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            color: #cbd5e1;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            margin: 0.5rem;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(6, 182, 212, 0.5);
+        }
+
+        section {
+            padding: 5rem 5%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        section h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideInFromLeft 1s ease-out;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        #about {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .about-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            color: #cbd5e1;
+            line-height: 1.9;
+            border-left: 3px solid #06b6d4;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .about-content p:hover {
+            border-left-color: #3b82f6;
+            padding-left: 2rem;
+            color: #e0e0e0;
+        }
+
+        #skills {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.5) 100%);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .skill-card {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: rgba(6, 182, 212, 0.8);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+        }
+
+        .skill-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #06b6d4;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover h3 {
+            color: #3b82f6;
+        }
+
+        .skill-level {
+            width: 100%;
+            height: 8px;
+            background: rgba(100, 116, 139, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            border-radius: 10px;
+            animation: skillGrow 1.5s ease-out;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .skill-percent {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        #projects {
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            border-color: rgba(6, 182, 212, 0.8);
+            box-shadow: 0 20px 50px rgba(6, 182, 212, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #06b6d4;
+        }
+
+        .project-card:hover .project-info h3 {
+            color: #3b82f6;
+        }
+
+        .project-info p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.2);
+            color: #06b6d4;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(6, 182, 212, 0.5);
+        }
+
+        #contact {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.6) 100%);
+        }
+
+        .contact-container {
+            text-align: center;
+            max-width: 700px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .contact-container p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #cbd5e1;
+        }
+
+        .contact-info {
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            color: #cbd5e1;
+            padding: 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 10px;
+            border-left: 3px solid #06b6d4;
+        }
+
+        .contact-info span {
+            color: #06b6d4;
+            font-weight: bold;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            color: #06b6d4;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #06b6d4;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: #06b6d4;
+            color: #0a0e27;
+        }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            text-align: center;
+            padding: 2rem;
+            color: #94a3b8;
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes skillGrow {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .skills-container, .projects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="logo">PZ</div>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1>Paul Zeeshan</h1>
+            <p class="subtitle">Full Stack Developer | AI & Cloud Specialist</p>
+            <p>Crafting modern, scalable solutions with cutting-edge technologies. From concept to deployment, I build applications that matter.</p>
+            <a href="#contact" class="cta-button">Start Project</a>
+            <a href="#projects" class="cta-button">View Work</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <p>
+                I'm a passionate Full-Stack Developer with expertise in building scalable, modern web applications and mobile solutions. I specialize in the MERN stack, along with emerging technologies like AI, IoT, and cloud computing.
+            </p>
+            <p>
+                My technical arsenal spans frontend (HTML5, CSS3, JavaScript ES6+, React, Next.js), backend (Node.js, Express, Firebase), databases (MongoDB, SQL Server), and mobile development (Flutter, React Native). I'm proficient in Python, ML, AWS, Docker, and CI/CD pipelines.
+            </p>
+            <p>
+                What sets me apart is my commitment to clean, maintainable code and solving complex problems efficiently. I follow Agile methodologies, excel at version control, and am passionate about creating user-centric applications with real impact.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Technical Skills</h2>
+        <div class="skills-container">
+            <div class="skill-card">
+                <h3>Frontend Development</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 93%;"></div></div>
+                <p class="skill-percent">HTML5, CSS3, JavaScript ES6+, React, Next.js</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Backend Development</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 90%;"></div></div>
+                <p class="skill-percent">Node.js, Express, Firebase, REST APIs</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Databases</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 88%;"></div></div>
+                <p class="skill-percent">MongoDB, SQL Server, PostgreSQL</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Mobile Development</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 82%;"></div></div>
+                <p class="skill-percent">Flutter, Dart, React Native</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Cloud & DevOps</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 80%;"></div></div>
+                <p class="skill-percent">AWS, Firebase, Docker, CI/CD</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>AI & Machine Learning</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 76%;"></div></div>
+                <p class="skill-percent">Python, TensorFlow, ML Algorithms</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>IoT & Embedded</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 74%;"></div></div>
+                <p class="skill-percent">Arduino, Sensors, Microcontrollers</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Tools & Git</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 92%;"></div></div>
+                <p class="skill-percent">Git/GitHub, Agile, Postman, VS Code</p>
+            </div>
+
+            <div class="skill-card">
+                <h3>Version Control</h3>
+                <div class="skill-level"><div class="skill-bar" style="width: 95%;"></div></div>
+                <p class="skill-percent">Git, GitHub, Branching, Collaboration</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Featured Projects</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <div class="project-image">🌐</div>
+                <div class="project-info">
+                    <h3>AI Travel Assistant</h3>
+                    <p>Full-stack app with OpenAI integration</p>
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">OpenAI</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">📱</div>
+                <div class="project-info">
+                    <h3>Mobile App Platform</h3>
+                    <p>Cross-platform app with Firebase backend</p>
+                    <span class="project-tag">Flutter</span>
+                    <span class="project-tag">Firebase</span>
+                    <span class="project-tag">Dart</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">🤖</div>
+                <div class="project-info">
+                    <h3>Smart IoT System</h3>
+                    <p>Arduino-based IoT with cloud integration</p>
+                    <span class="project-tag">Arduino</span>
+                    <span class="project-tag">AWS</span>
+                    <span class="project-tag">Python</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">💼</div>
+                <div class="project-info">
+                    <h3>E-Commerce Platform</h3>
+                    <p>MERN stack with payment integration</p>
+                    <span class="project-tag">MERN</span>
+                    <span class="project-tag">Stripe</span>
+                    <span class="project-tag">JWT</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">📊</div>
+                <div class="project-info">
+                    <h3>Analytics Dashboard</h3>
+                    <p>ML-powered dashboard with insights</p>
+                    <span class="project-tag">Python</span>
+                    <span class="project-tag">React</span>
+                    <span class="project-tag">ML</span>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">🔐</div>
+                <div class="project-info">
+                    <h3>Secure Auth System</h3>
+                    <p>JWT, encryption & security best practices</p>
+                    <span class="project-tag">Node.js</span>
+                    <span class="project-tag">JWT</span>
+                    <span class="project-tag">bcrypt</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-container">
+            <p>I'm always open to new opportunities and collaborations!</p>
+            
+            <div class="contact-info">
+                📧 Email: <span>paulzeeshan351@gmail.com</span>
+            </div>
+
+            <div class="contact-links">
+                <a href="mailto:paulzeeshan351@gmail.com" class="contact-link">Send Email</a>
+                <a href="#" class="contact-link">LinkedIn</a>
+                <a href="#" class="contact-link">GitHub</a>
+                <a href="#" class="contact-link">Twitter</a>
+            </div>
+
+            <a href="mailto:paulzeeshan351@gmail.com" class="cta-button">Hire Me Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Paul Zeeshan | Full Stack Developer | Built with ❤️</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card, .project-card, .about-content p').forEach(el => {
+            el.classList.add('fade-in');
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('nav a').forEach(link => {
+                link.style.color = '#cbd5e1';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.style.color = '#06b6d4';
+                } else {
+                    link.style.color = '#cbd5e1';
+                }
+            });
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const bg = document.querySelector('.bg-animation');
+            if (bg) {
+                const x = (e.clientX / window.innerWidth) * 5;
+                const y = (e.clientY / window.innerHeight) * 5;
+                bg.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+
+        console.log('%cWelcome to Paul Zeeshan Portfolio', 'color: #06b6d4; font-size: 20px; font-weight: bold;');
+    </script>
+
+</body>
+</html>
